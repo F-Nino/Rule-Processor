@@ -9,19 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class IncomeValidationRule implements ValidationRule {
+public class IncomeValidationRule extends ValidationRule {
     
     @Override
     public RuleViolation validate(Application application) {
         Income applicationIncome = application.getIncome();
         if (applicationIncome == null) {
-            return createViolation("Income information required");
+            return createViolation("income", "Income information required");
         }
         
         List<String> violations = collectIncomeViolations(applicationIncome);
         
         if (!violations.isEmpty()) {
-            return createViolation(String.join("; ", violations));
+            return createViolation("income", String.join("; ", violations));
         }
         
         return null;
@@ -43,8 +43,4 @@ public class IncomeValidationRule implements ValidationRule {
         return violations;
     }
 
-    
-    private RuleViolation createViolation(String message) {
-        return new RuleViolation("income", message);
-    }
 }

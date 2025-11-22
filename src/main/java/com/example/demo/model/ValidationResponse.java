@@ -1,32 +1,15 @@
 package com.example.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ValidationResponse {
     private boolean valid;
     private List<RuleViolation> violations;
-
-    public ValidationResponse() {
-    }
-
-    public ValidationResponse(boolean valid, List<RuleViolation> violations, int totalRulesChecked) {
-        this.valid = valid;
-        this.violations = violations;
-    }
-
-    public boolean isValid() {
-        return valid;
-    }
-
-    public void setValid(boolean valid) {
-        this.valid = valid;
-    }
-
-    public List<RuleViolation> getViolations() {
-        return violations;
-    }
-
-    public void setViolations(List<RuleViolation> violations) {
-        this.violations = violations;
-    }
 }

@@ -1,10 +1,8 @@
 package com.example.demo.controller;
 
-
 import com.example.demo.model.Application;
 import com.example.demo.model.ValidationResponse;
 import com.example.demo.service.ValidationService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,14 +16,9 @@ public class ValidationController {
         this.validationService = validationService;
     }
 
-
     @PostMapping("/validate")
-    public ResponseEntity<ValidationResponse> validateApplication(
-            @RequestBody Application application) {
-
-        ValidationResponse response = validationService.validateApplication(application);
-
-        return ResponseEntity.ok(response);
+    public ValidationResponse validateApplication(@RequestBody Application application) {
+        return validationService.validateApplication(application);
     }
 }
 

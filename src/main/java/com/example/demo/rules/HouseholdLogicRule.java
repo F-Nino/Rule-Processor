@@ -6,24 +6,24 @@ import com.example.demo.model.RuleViolation;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HouseholdLogicRule implements ValidationRule {
+public class HouseholdLogicRule extends ValidationRule {
     
     @Override
     public RuleViolation validate(Application application) {
         Household household = application.getHousehold();
         if (household == null) {
-            return createViolation("Household information required");
+            return createViolation("household", "Household information required");
         }
         
         Integer numberInHousehold = household.getNumberInHousehold();
         Integer numberInCollege = household.getNumberInCollege();
         
         if (numberInHousehold == null || numberInCollege == null) {
-            return createViolation("Number in household and number in college are required");
+            return createViolation("household", "Number in household and number in college are required");
         }
         
         if (numberInCollege > numberInHousehold) {
-            return createViolation(
+            return createViolation("household",
                 String.format("Number in college (%d) cannot exceed number in household (%d)",
                     numberInCollege, numberInHousehold)
             );
@@ -32,7 +32,4 @@ public class HouseholdLogicRule implements ValidationRule {
         return null;
     }
 
-    private RuleViolation createViolation(String message) {
-        return new RuleViolation("household", message);
-    }
 }

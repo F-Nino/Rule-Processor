@@ -7,26 +7,26 @@ import com.example.demo.model.SpouseInfo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MaritalStatusRule implements ValidationRule {
+public class MaritalStatusRule extends ValidationRule {
 
     @Override
     public RuleViolation validate(Application application) {
         MaritalStatus maritalStatus = application.getMaritalStatus();
         if (maritalStatus == null) {
-            return createViolation("Marital status required");
+            return createViolation("maritalStatus", "Marital status required");
         }
         
         if (maritalStatus == MaritalStatus.MARRIED) {
             SpouseInfo spouse = application.getSpouseInfo();
             
             if (spouse == null) {
-                return createViolation("Spouse information is required for married students");
+                return createViolation("spouseInfo", "Spouse information is required for married students");
             }
 
             if (isNullOrEmpty(spouse.getFirstName()) || 
                 isNullOrEmpty(spouse.getLastName()) || 
                 isNullOrEmpty(spouse.getSsn())) {
-                return createViolation(
+                return createViolation("spouseInfo",
                     "Complete spouse information (first name, last name, and SSN) is required for married students"
                 );
             }
@@ -39,7 +39,4 @@ public class MaritalStatusRule implements ValidationRule {
         return value == null || value.trim().isEmpty();
     }
     
-    private RuleViolation createViolation(String message) {
-        return new RuleViolation("spouseInfo", message);
-    }
 }

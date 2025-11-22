@@ -5,7 +5,7 @@
 
 
 ### Chosen Approach: Rule Interface Pattern
-Create a `ValidationRule` interface with concrete implementations for each rule
+Create a `ValidationRule` abstract class to share createViolation method but each implements their own validate method based on their specific validation logic
 - **Rationale**:
 - Quick to implement under time constraints
 - Easy to add new rules in the future
@@ -19,6 +19,10 @@ Create a `ValidationRule` interface with concrete implementations for each rule
 - **No Severity Levels**: All violations are treated equally
 - **Future Enhancement**: Could implement rule priorities or severity levels if needed
 
+### Testing
+- **Unit Testing**: Each rule is tested independently along with the validation service 
+- **Integration Testing**: All rules are tested together
+
 
 ## Conflict Detection
 
@@ -29,7 +33,6 @@ Create a `ValidationRule` interface with concrete implementations for each rule
 
 
 ### Future Considerations
-- **Conflict Detection Strategy**:
 - Identify rules with overlapping field requirements
 - Flag rules that could produce contradictory violations
 
@@ -129,4 +132,10 @@ Main entity containing all student application data
 #### `ValidationResponse`
 - `valid`: Boolean
 - `violations`: List&lt;RuleViolation&gt;
+
+### Rule Model
+#### `ValidationRule` abstract class that each rule extends and implements their own validate method
+- `validate()`
+- `createViolation()` shared method for creating violations
+
 

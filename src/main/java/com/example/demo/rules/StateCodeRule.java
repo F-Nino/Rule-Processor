@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class StateCodeRule implements ValidationRule {
+public class StateCodeRule extends ValidationRule {
     
     private static final Set<String> VALID_STATE_CODES = Set.of(
         "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
@@ -23,13 +23,13 @@ public class StateCodeRule implements ValidationRule {
         String stateCode = application.getStateOfResidence();
         
         if (stateCode == null || stateCode.trim().isEmpty()) {
-            return createViolation("State of residence is required");
+            return createViolation("stateOfResidence", "State of residence is required");
         }
         
         String normalizedState = stateCode.trim().toUpperCase();
         
         if (!VALID_STATE_CODES.contains(normalizedState)) {
-            return createViolation(
+            return createViolation("stateOfResidence",
                 String.format("Invalid state code '%s'", stateCode)
             );
         }
@@ -37,7 +37,4 @@ public class StateCodeRule implements ValidationRule {
         return null;
     }
     
-    private RuleViolation createViolation(String message) {
-        return new RuleViolation("stateOfResidence", message);
-    }
 }
