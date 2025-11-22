@@ -240,3 +240,11 @@ The application implements the following validation rules:
 ## Design Decisions
 
 See [Decisions.md](./Decisions.md) for detailed architectural decisions and rationale.
+
+
+### Time Spent
+Total Time Spent: 2 hours 20min
+- Planning: 30 min
+- Implementation: 1 hour (cleaning up AI's code)
+- Testing: 30 min
+- Documentation - 20 min
