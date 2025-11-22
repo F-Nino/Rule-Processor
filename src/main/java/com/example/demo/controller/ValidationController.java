@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/application")
+@RequestMapping("/applications")
 public class ValidationController {
 
     private final ValidationService validationService;
@@ -19,7 +19,7 @@ public class ValidationController {
     }
 
 
-    @PostMapping()
+    @PostMapping("/validate")
     public ResponseEntity<ValidationResponse> validateApplication(
             @RequestBody Application application) {
 

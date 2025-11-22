@@ -11,7 +11,8 @@ Create a `ValidationRule` interface with concrete implementations for each rule
 - Easy to add new rules in the future
 - Enables isolated unit testing for each rule
 - Clear separation of concerns
-
+- Assume no authentication is needed for current task
+- No database for now (if application is valid we could store in the future)
 
 ### Rule Execution Strategy
 - **No Priority System**: All rules execute and return violations at once
@@ -75,7 +76,7 @@ Potential bottlenecks if rules include:
 - Thread pool sizing based on I/O vs CPU-bound operations
 
 
-_## Data Model
+## Data Model
 
 
 ### Core Classes

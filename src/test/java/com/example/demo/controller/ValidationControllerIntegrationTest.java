@@ -26,28 +26,28 @@ public class ValidationControllerIntegrationTest {
     @Test
     void shouldReturnValidForCompleteValidApplication() throws Exception {
         String validApplication = """
-               {
-                 "studentInfo": {
-                   "firstName": "Jane",
-                   "lastName": "Smith",
-                   "ssn": "123456789",
-                   "dateOfBirth": "2003-05-15"
-                 },
-                 "dependencyStatus": "DEPENDENT",
-                 "maritalStatus": "SINGLE",
-                 "household": {
-                   "numberInHousehold": 4,
-                   "numberInCollege": 1
-                 },
-                 "income": {
-                   "studentIncome": 5000,
-                   "parentIncome": 65000
-                 },
-                 "stateOfResidence": "CA"
-               }
-               """;
+                {
+                  "studentInfo": {
+                    "firstName": "Jane",
+                    "lastName": "Smith",
+                    "ssn": "123456789",
+                    "dateOfBirth": "2003-05-15"
+                  },
+                  "dependencyStatus": "DEPENDENT",
+                  "maritalStatus": "SINGLE",
+                  "household": {
+                    "numberInHousehold": 4,
+                    "numberInCollege": 1
+                  },
+                  "income": {
+                    "studentIncome": 5000,
+                    "parentIncome": 65000
+                  },
+                  "stateOfResidence": "CA"
+                }
+                """;
 
-        mockMvc.perform(post("/application")
+        mockMvc.perform(post("/applications/validate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validApplication))
                 .andExpect(status().isOk())
@@ -58,27 +58,27 @@ public class ValidationControllerIntegrationTest {
     @Test
     void shouldReturnMultipleViolationsForInvalidApplication() throws Exception {
         String invalidApplication = """
-               {
-                 "studentInfo": {
-                   "firstName": "John",
-                   "lastName": "Doe",
-                   "ssn": "invalid",
-                   "dateOfBirth": "2015-01-01"
-                 },
-                 "dependencyStatus": "DEPENDENT",
-                 "maritalStatus": "MARRIED",
-                 "household": {
-                   "numberInHousehold": 2,
-                   "numberInCollege": 5
-                 },
-                 "income": {
-                   "studentIncome": -1000
-                 },
-                 "stateOfResidence": "XX"
-               }
-               """;
+                {
+                  "studentInfo": {
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "ssn": "invalid",
+                    "dateOfBirth": "2015-01-01"
+                  },
+                  "dependencyStatus": "DEPENDENT",
+                  "maritalStatus": "MARRIED",
+                  "household": {
+                    "numberInHousehold": 2,
+                    "numberInCollege": 5
+                  },
+                  "income": {
+                    "studentIncome": -1000
+                  },
+                  "stateOfResidence": "XX"
+                }
+                """;
 
-        mockMvc.perform(post("/application")
+        mockMvc.perform(post("/applications/validate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalidApplication))
                 .andExpect(status().isOk())
@@ -117,32 +117,32 @@ public class ValidationControllerIntegrationTest {
     @Test
     void shouldHandleMarriedStudentWithSpouseInfo() throws Exception {
         String marriedApplication = """
-               {
-                 "studentInfo": {
-                   "firstName": "Alice",
-                   "lastName": "Johnson",
-                   "ssn": "987654321",
-                   "dateOfBirth": "2000-03-20"
-                 },
-                 "dependencyStatus": "INDEPENDENT",
-                 "maritalStatus": "MARRIED",
-                 "spouseInfo": {
-                   "firstName": "Bob",
-                   "lastName": "Johnson",
-                   "ssn": "123987456"
-                 },
-                 "household": {
-                   "numberInHousehold": 2,
-                   "numberInCollege": 1
-                 },
-                 "income": {
-                   "studentIncome": 30000
-                 },
-                 "stateOfResidence": "NY"
-               }
-               """;
+                {
+                  "studentInfo": {
+                    "firstName": "Alice",
+                    "lastName": "Johnson",
+                    "ssn": "987654321",
+                    "dateOfBirth": "2000-03-20"
+                  },
+                  "dependencyStatus": "INDEPENDENT",
+                  "maritalStatus": "MARRIED",
+                  "spouseInfo": {
+                    "firstName": "Bob",
+                    "lastName": "Johnson",
+                    "ssn": "123987456"
+                  },
+                  "household": {
+                    "numberInHousehold": 2,
+                    "numberInCollege": 1
+                  },
+                  "income": {
+                    "studentIncome": 30000
+                  },
+                  "stateOfResidence": "NY"
+                }
+                """;
 
-        mockMvc.perform(post("/application")
+        mockMvc.perform(post("/applications/validate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(marriedApplication))
                 .andExpect(status().isOk())
@@ -153,28 +153,27 @@ public class ValidationControllerIntegrationTest {
     @Test
     void shouldDetectMissingSpouseInfoForMarriedStudent() throws Exception {
         String marriedWithoutSpouse = """
-               {
-                 "studentInfo": {
-                   "firstName": "Charlie",
-                   "lastName": "Brown",
-                   "ssn": "555666777",
-                   "dateOfBirth": "2001-07-10"
-                 },
-                 "dependencyStatus": "INDEPENDENT",
-                 "maritalStatus": "MARRIED",
-                 "household": {
-                   "numberInHousehold": 2,
-                   "numberInCollege": 1
-                 },
-                 "income": {
-                   "studentIncome": 25000
-                 },
-                 "stateOfResidence": "TX"
-               }
-               """;
+                {
+                  "studentInfo": {
+                    "firstName": "Charlie",
+                    "lastName": "Brown",
+                    "ssn": "555666777",
+                    "dateOfBirth": "2001-07-10"
+                  },
+                  "dependencyStatus": "INDEPENDENT",
+                  "maritalStatus": "MARRIED",
+                  "household": {
+                    "numberInHousehold": 2,
+                    "numberInCollege": 1
+                  },
+                  "income": {
+                    "studentIncome": 25000
+                  },
+                  "stateOfResidence": "TX"
+                }
+                """;
 
-
-        mockMvc.perform(post("/application")
+        mockMvc.perform(post("/applications/validate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(marriedWithoutSpouse))
                 .andExpect(status().isOk())
